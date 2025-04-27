@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
+# ensure we can find all the admin tools even if PATH was minimal
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${PATH}"
+
 # must run as root
 if (( EUID != 0 )); then
   echo "Run this as root (sudo)" >&2
