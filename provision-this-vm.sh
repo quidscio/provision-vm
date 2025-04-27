@@ -10,6 +10,17 @@ if (( EUID != 0 )); then
   exit 1
 fi
 
+# verify the Guest Additions ISO is attached but not already mounted
+if [[ ! -b /dev/cdrom ]]; then
+  echo "Error: /dev/cdrom not found. Attach the Guest Additions ISO and try again." >&2
+  exit 1
+fi
+
+if grep -q '^/dev/cdrom ' /proc/mounts; then
+  echo "Error: /dev/cdrom already mounted. Unmount it before running this script." >&2
+  exit 1
+fi
+
 # Prompt for the demo user’s password (with confirmation)
 read -rsp "Enter password for 'demo' user: " DEMO_PW
 echo
@@ -24,11 +35,11 @@ fi
 if ! id demo &>/dev/null; then
   useradd -m -s /bin/bash demo
   echo "User 'demo' created."
-fi
 
-# Set (or reset) the demo user’s password
-echo "demo:$DEMO_PW" | chpasswd
-echo "Password for 'demo' set."
+  # Set the demo user’s password
+  echo "demo:$DEMO_PW" | chpasswd
+  echo "Password for 'demo' set."
+fi
 
 # 1) Give demo passwordless sudo
 usermod -aG sudo demo
