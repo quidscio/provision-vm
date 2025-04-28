@@ -68,4 +68,7 @@ rmdir /mnt/vbga
 apt autoremove -y
 apt clean
 
+# 6) Disable screen saver and avoid blanking bug 
+gsettings set org.gnome.desktop.screensaver lock-enabled false 
+
 echo "Provisioning complete. You can now shut down and snapshot the VM."
