@@ -10,24 +10,14 @@ if (( EUID != 0 )); then
   exit 1
 fi
 
-# verify the Guest Additions ISO is attached but not already mounted
-if [[ ! -b /dev/cdrom ]]; then
-  echo "Error: /dev/cdrom not found. Attach the Guest Additions ISO and try again." >&2
+# verify the Guest Additions ISO is inserted and not already mounted
+if ! blkid -o value -s TYPE /dev/cdrom | grep -q '^iso9660$'; then
+  echo "Error: no ISO9660 volume detected on /dev/cdrom. Attach the Guest Additions ISO and try again." >&2
   exit 1
 fi
 
-if grep -q '^/dev/cdrom ' /proc/mounts; then
-  echo "Error: /dev/cdrom already mounted. Unmount it before running this script." >&2
-  exit 1
-fi
-
-# Prompt for the demo user’s password (with confirmation)
-read -rsp "Enter password for 'demo' user: " DEMO_PW
-echo
-read -rsp "Confirm password: " DEMO_PW_CONFIRM
-echo
-if [[ "$DEMO_PW" != "$DEMO_PW_CONFIRM" ]]; then
-  echo "Passwords do not match. Exiting." >&2
+if mountpoint -q /mnt/vbga; then
+  echo "Error: /mnt/vbga already in use. Unmount it before running this script." >&2
   exit 1
 fi
 
@@ -35,6 +25,16 @@ fi
 if ! id demo &>/dev/null; then
   useradd -m -s /bin/bash demo
   echo "User 'demo' created."
+
+  # Prompt for the demo user’s password (with confirmation)
+  read -rsp "Enter password for 'demo' user: " DEMO_PW
+  echo
+  read -rsp "Confirm password: " DEMO_PW_CONFIRM
+  echo
+  if [[ "$DEMO_PW" != "$DEMO_PW_CONFIRM" ]]; then
+    echo "Passwords do not match. Exiting." >&2
+    exit 1
+  fi
 
   # Set the demo user’s password
   echo "demo:$DEMO_PW" | chpasswd
