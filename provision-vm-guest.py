@@ -68,14 +68,14 @@ def main():
         "snapshot",
         vm_name,
         "take",
-        "clean-install",
+        "fully-provisioned",
         "--description",
         "After initial provisioning"
     ]
     print(".. Command:", ' '.join(_quote(a) for a in cmd_snap))
     subprocess.run(cmd_snap, check=True)
 
-    print(f"\n✅ Clipboard enabled and snapshot 'clean-install' taken for VM '{vm_name}'.")
+    print(f"\n✅ Clipboard enabled and snapshot 'fully-provisioned' taken for VM '{vm_name}'")
 
 if __name__ == "__main__":
     main()
