@@ -43,6 +43,7 @@ fi
 
 # 1) Give demo passwordless sudo
 usermod -aG sudo demo
+usermod -aG sudo rmhines        # maybe only I have this one 
 cat >/etc/sudoers.d/demo <<'EOF'
 demo ALL=(ALL) NOPASSWD: ALL
 EOF
