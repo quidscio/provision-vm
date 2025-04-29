@@ -76,7 +76,13 @@ kwriteconfig5 --file ~/.config/kscreenlockerrc --group Daemon --key Autolock fal
 # turn off locking when coming back from suspend/resume
 kwriteconfig5 --file ~/.config/kscreenlockerrc --group Daemon --key LockOnResume false  
 # Re-read settings 
+sleep 3
 qdbus org.freedesktop.ScreenSaver /ScreenSaver configure
+
+# 7) Select vs Execute folders and files 
+kwriteconfig5 --file ~/.config/kdeglobals --group KDE --key SingleClick false
+# restart 
+kquitapp5 plasmashell && kstart5 plasmashell
 
 
 echo "Provisioning complete. You can now shut down and snapshot the VM."
