@@ -75,9 +75,7 @@ apt clean
 kwriteconfig5 --file ~/.config/kscreenlockerrc --group Daemon --key Autolock false  
 # turn off locking when coming back from suspend/resume
 kwriteconfig5 --file ~/.config/kscreenlockerrc --group Daemon --key LockOnResume false  
-# Re-read settings 
-sleep 3
-qdbus org.freedesktop.ScreenSaver /ScreenSaver configure
+# settings will be active on next login/restart  
 
 # 7) Select vs Execute folders and files 
 kwriteconfig5 --file ~/.config/kdeglobals --group KDE --key SingleClick false
