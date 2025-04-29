@@ -24,7 +24,7 @@ kwriteconfig5 --file ~/.config/kscreenlockerrc --group Daemon --key LockOnResume
 # 7) Select vs Execute folders and files 
 kwriteconfig5 --file ~/.config/kdeglobals --group KDE --key SingleClick false
 # restart 
-kquitapp5 plasmashell && kstart5 plasmashell
+# kquitapp5 plasmashell && kstart5 plasmashell
 
 
 echo "User config complete for ${USER}" 
