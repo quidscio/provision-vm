@@ -69,6 +69,14 @@ apt autoremove -y
 apt clean
 
 # 6) Disable screen saver and avoid blanking bug 
-gsettings set org.gnome.desktop.screensaver lock-enabled false 
+# gnome version 
+# gsettings set org.gnome.desktop.screensaver lock-enabled false 
+# turn off automatic locking after idle
+kwriteconfig5 --file ~/.config/kscreenlockerrc --group Daemon --key Autolock false  
+# turn off locking when coming back from suspend/resume
+kwriteconfig5 --file ~/.config/kscreenlockerrc --group Daemon --key LockOnResume false  
+# Re-read settings 
+qdbus org.freedesktop.ScreenSaver /ScreenSaver configure
+
 
 echo "Provisioning complete. You can now shut down and snapshot the VM."
