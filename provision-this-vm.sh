@@ -68,19 +68,20 @@ rmdir /mnt/vbga
 apt autoremove -y
 apt clean
 
+# Ah...none of the following will work as root. Must be done as user where change is desired. 
 # 6) Disable screen saver and avoid blanking bug 
 # gnome version 
 # gsettings set org.gnome.desktop.screensaver lock-enabled false 
 # turn off automatic locking after idle
-kwriteconfig5 --file ~/.config/kscreenlockerrc --group Daemon --key Autolock false  
+# kwriteconfig5 --file ~/.config/kscreenlockerrc --group Daemon --key Autolock false  
 # turn off locking when coming back from suspend/resume
-kwriteconfig5 --file ~/.config/kscreenlockerrc --group Daemon --key LockOnResume false  
+# kwriteconfig5 --file ~/.config/kscreenlockerrc --group Daemon --key LockOnResume false  
 # settings will be active on next login/restart  
 
 # 7) Select vs Execute folders and files 
-kwriteconfig5 --file ~/.config/kdeglobals --group KDE --key SingleClick false
+# kwriteconfig5 --file ~/.config/kdeglobals --group KDE --key SingleClick false
 # restart 
-kquitapp5 plasmashell && kstart5 plasmashell
+# kquitapp5 plasmashell && kstart5 plasmashell
 
 
 echo "Provisioning complete. You can now shut down and snapshot the VM."
