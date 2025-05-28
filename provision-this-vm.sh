@@ -41,9 +41,12 @@ if ! id demo &>/dev/null; then
   echo "Password for 'demo' set."
 fi
 
+# import environment changes 
+source .env 
+
 # 1) Give demo passwordless sudo
 usermod -aG sudo demo
-usermod -aG sudo rmhines        # maybe only I have this one 
+usermod -aG sudo $USER1        # Add any custom users in this way
 cat >/etc/sudoers.d/demo <<'EOF'
 demo ALL=(ALL) NOPASSWD: ALL
 EOF
